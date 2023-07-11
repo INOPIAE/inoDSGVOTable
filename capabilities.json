@@ -12,45 +12,51 @@
         }
     ],
     "objects": {
-        "dataPoint": {
+        "dsgvoSettings": {
             "properties": {
-                "defaultColor": {
+                "otherName": {
                     "type": {
-                        "fill": {
-                            "solid": {
-                                "color": true
-                            }
-                        }
+                        "text": true
                     }
                 },
-                "showAllDataPoints": {
+                "otherLimit": {
+                    "type": {
+                        "numeric": true
+                    }
+                },
+                "showMainSubject": {
+                    "type": {
+                        "bool": true
+                    }
+                }
+            }
+        },
+        "totals": {
+            "properties": {
+                "showSubtotal": {
                     "type": {
                         "bool": true
                     }
                 },
-                "fill": {
+                "showTotal": {
                     "type": {
-                        "fill": {
-                            "solid": {
-                                "color": true
-                            }
-                        }
+                        "bool": true
                     }
-                },
-                "fillRule": {
+                }
+            }
+        },
+        "columnFormatting": {
+            "displayName": "Bold Column Formatting",
+            "properties": {
+                "fontBold": {
+                    "displayName": "Font Bold",
                     "type": {
-                        "fill": {}
-                    }
-                },
-                 "fontSize": {
-                    "type": {
-                        "formatting": {
-                            "fontSize": true
-                        }
+                        "bool": true
                     }
                 }
             }
         }
+
     },
     "dataViewMappings": [
         {

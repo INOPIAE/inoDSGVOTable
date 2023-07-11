@@ -69,25 +69,27 @@ export class Visual implements IVisual {
             dsgvoTable.append(headerRow);
 
             var mainsubject = null;
-            var strOther = "Other";//this.formattingSettings.dsgvo.otherName.value;
+            var strOther = this.formattingSettings.DSGVOCard.otherName.value;
             var intOther = 0;
-            var intOtherMargin = 5;//this.formattingSettings.dsgvo.otherLimit.value;
+            var intOtherMargin = this.formattingSettings.DSGVOCard.otherLimit.value;
             var intSubtotal = 0;
             var intTotal = 0;
 
-            var blnHideMainsubject: boolean = false;
-            var blnShowSubtotal = false;
-            var blnShowTotal = false;
+            var blnShowMainsubject = this.formattingSettings.DSGVOCard.showMainSubject.value;
+            var blnShowSubtotal = this.formattingSettings.TotalCard.showSubTotal.value;
+            var blnShowTotal = this.formattingSettings.TotalCard.showTotal.value;
+            var blnFirstRow = false;
 
             for (var rowIndex: number = 0; rowIndex < rows.length; rowIndex++) {
 
                 if (mainsubject === null) {
                     mainsubject = rows[rowIndex][0].valueOf();
+                    blnFirstRow = true;
                 }
                 else if (mainsubject != rows[rowIndex][0].valueOf()) {
-                    // handle main subject
+                    // handle other
                     var topic = mainsubject;
-                    if (blnHideMainsubject != false) {
+                    if (blnShowMainsubject != true) {
                         topic = "";
                     }
                     this.addRow(dsgvoTable, topic, strOther, intOther, columns);
@@ -100,26 +102,31 @@ export class Visual implements IVisual {
                     }
 
                     mainsubject = rows[rowIndex][0].valueOf();
+                    blnFirstRow = true;
                 }
 
-                
+                console.log('Row', rowIndex + " m " + blnShowMainsubject  + " e " + blnFirstRow);
 
                 var firstColumn: PrimitiveValue = rows[rowIndex][0].valueOf();
                 var secondColumn: PrimitiveValue = rows[rowIndex][1].valueOf();
                 var thirdColumn: PrimitiveValue = rows[rowIndex][2].valueOf();
+                if (blnShowMainsubject != true && blnFirstRow != true) {
+                    firstColumn = "";
+                }
                 if (intOtherMargin < Number(rows[rowIndex][2].valueOf())) {
                     this.addRow(dsgvoTable, firstColumn, secondColumn, thirdColumn, columns, true);
+                    blnFirstRow = false;
                 } else{
                     intOther += Number(rows[rowIndex][2].valueOf());
                 }
-
+                
                 intSubtotal += Number(rows[rowIndex][2].valueOf())
                 intTotal += Number(rows[rowIndex][2].valueOf())
             }
 
             // handle final rows
             var topic = mainsubject;
-            if (blnHideMainsubject != false) {
+            if (blnShowMainsubject != true) {
                 topic = "";
             }
             this.addRow(dsgvoTable, topic, strOther, intOther, columns);

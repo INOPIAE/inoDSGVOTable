@@ -1,0 +1,25 @@
+{
+    "visual": {
+        "name": "inoDSGVOTable",
+        "displayName": "inoDSGVOTable",
+        "guid": "inoDSGVOTable3AE8089A9E43435E95C001A9A908A8AC",
+        "visualClassName": "Visual",
+        "version": "1.0.0",
+        "description": "",
+        "supportUrl": "",
+        "gitHubUrl": ""
+    },
+    "apiVersion": "5.1.0",
+    "author": {
+        "name": "INOPIAE",
+        "email": "m.maengel@inopiae.de"
+    },
+    "assets": {
+        "icon": "assets/icon.png"
+    },
+    "externalJS": null,
+    "style": "style/visual.less",
+    "capabilities": "capabilities.json",
+    "dependencies": null,
+    "stringResources": []
+}

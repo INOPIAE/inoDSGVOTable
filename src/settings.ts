@@ -49,12 +49,12 @@ class TotalsCardSettings extends FormattingSettingsCard {
     })
 
     showSubTotal= new formattingSettings.ToggleSwitch({
-        name: "showSubTotal",
+        name: "showSubtotal",
         displayName: "Show Sub Totals",
         value: false
     })
 
     name: string = "totals";
     displayName: string = "Totals and Sub totals";
-    slices: Array<FormattingSettingsSlice> = [this.showTotal, this.showSubTotal];
+    slices: Array<FormattingSettingsSlice> = [this.showSubTotal, this.showTotal];
 }

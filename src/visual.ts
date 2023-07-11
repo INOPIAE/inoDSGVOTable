@@ -64,7 +64,13 @@ export class Visual implements IVisual {
             var dsgvoTable: JQuery = $("<table>", { id: "dsgvoTable" });
             var headerRow: JQuery = $("<tr>");
             for (var headerIndex: number = 0; headerIndex < columns.length; headerIndex++) {
-                headerRow.append($("<th>").text(columns[headerIndex].displayName));
+                var headerCell: JQuery = $("<th>").text(columns[headerIndex].displayName);
+                if (headerIndex < 2 ){
+                    headerCell.css({ "text-align": "left" });
+                } else {
+                    headerCell.css({ "text-align": "right" });
+                }
+                headerRow.append(headerCell);
             }
             dsgvoTable.append(headerRow);
 

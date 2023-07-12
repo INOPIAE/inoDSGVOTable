@@ -20,13 +20,14 @@ class DSGVOCardSettings extends FormattingSettingsCard {
     otherName = new formattingSettings.TextInput({
         placeholder:"otherName",
         name: "otherName",
-        displayName: "Text for Other",
+        displayNameKey: "F_Othername",
+        descriptionKey: "F_Othername",
         value: "Other"
     });
 
     otherLimit = new formattingSettings.NumUpDown({
         name: "otherLimit",
-        displayName: "Less than",
+        displayNameKey: "F_OtherLimit",
         value: 5
     });
 

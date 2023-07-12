@@ -22,6 +22,7 @@ import IVisualHost = powerbi.extensibility.visual.IVisualHost;
 import { valueFormatter as vf, textMeasurementService as tms } from "powerbi-visuals-utils-formattingutils";
 import IValueFormatter = vf.IValueFormatter;
 
+import ILocalizationManager = powerbi.extensibility.ILocalizationManager;
 
 import { VisualFormattingSettingsModel } from "./settings";
 
@@ -36,6 +37,8 @@ export class Visual implements IVisual {
     private rootElement: JQuery;
     private dataView: DataView;
     private hostService: IVisualHost;
+    private locale: string;
+   // private localizationManager: ILocalizationManager;
 
     constructor(options: VisualConstructorOptions) {
         console.log('Visual constructor', options);
@@ -43,7 +46,9 @@ export class Visual implements IVisual {
 
         this.hostService = options.host;
         this.rootElement = $(options.element);
-
+        this.locale = options.host.locale;
+       // this.localizationManager = options.host.createLocalizationManager();
+       const localizationManager = options.host.createLocalizationManager();
     }
 
     public update(options: VisualUpdateOptions) {

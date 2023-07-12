@@ -65,7 +65,7 @@ export class Visual implements IVisual {
             var headerRow: JQuery = $("<tr>");
             for (var headerIndex: number = 0; headerIndex < columns.length; headerIndex++) {
                 var headerCell: JQuery = $("<th>").text(columns[headerIndex].displayName);
-                if (headerIndex < 2 ){
+                if (headerIndex < 2) {
                     headerCell.css({ "text-align": "left" });
                 } else {
                     headerCell.css({ "text-align": "right" });
@@ -90,8 +90,6 @@ export class Visual implements IVisual {
 
             var cSubtotal = this.formattingSettings.TotalCard.colorSubtotal.value.value
             var cTotal = this.formattingSettings.TotalCard.colorTotal.value.value
-    
-
             for (var rowIndex: number = 0; rowIndex < rows.length; rowIndex++) {
 
                 if (mainsubject === null) {
@@ -101,10 +99,13 @@ export class Visual implements IVisual {
                 else if (mainsubject != rows[rowIndex][0].valueOf()) {
                     // handle other
                     var topic = mainsubject;
-                    if (blnShowMainsubject != true) {
+                    if (blnShowMainsubject != true && blnFirstRow != true) {
                         topic = "";
                     }
-                    this.addRow(dsgvoTable, topic, strOther, intOther, columns);
+                    if (intOther > 0) {
+                        this.addRow(dsgvoTable, topic, strOther, intOther, columns);
+                    }
+                    
 
                     // handle sub total
                     if (blnShowSubtotal != false) {
@@ -112,9 +113,10 @@ export class Visual implements IVisual {
                         this.addRow(dsgvoTable, topic, "", intSubtotal, columns, blnBoldSubtotal, cSubtotal);
                         intSubtotal = 0;
                     }
-
+                    
                     mainsubject = rows[rowIndex][0].valueOf();
                     blnFirstRow = true;
+                    intOther = 0;
                 }
 
                 var firstColumn: PrimitiveValue = rows[rowIndex][0].valueOf();
@@ -123,10 +125,10 @@ export class Visual implements IVisual {
                 if (blnShowMainsubject != true && blnFirstRow != true) {
                     firstColumn = "";
                 }
-                if (intOtherMargin < Number(rows[rowIndex][2].valueOf())) {
+                if (intOtherMargin < Number(rows[rowIndex][2].valueOf()) ) {
                     this.addRow(dsgvoTable, firstColumn, secondColumn, thirdColumn, columns);
                     blnFirstRow = false;
-                } else{
+                } else {
                     intOther += Number(rows[rowIndex][2].valueOf());
                 }
                 
@@ -135,11 +137,14 @@ export class Visual implements IVisual {
             }
 
             // handle final rows
-            var topic = mainsubject;
-            if (blnShowMainsubject != true) {
-                topic = "";
+            if (intOther > 0){
+                var topic = mainsubject;
+                if (blnShowMainsubject != true) {
+                    topic = "";
+                }
+                this.addRow(dsgvoTable, topic, strOther, intOther, columns);    
             }
-            this.addRow(dsgvoTable, topic, strOther, intOther, columns);
+     
 
             // handle sub total
             if (blnShowSubtotal != false) {
@@ -159,14 +164,14 @@ export class Visual implements IVisual {
                 "height": options.viewport.height
             });
 
-                var dsgvoTableContainer: JQuery = $("<div>", { id: "dsgvoTableContainer" });
-                dsgvoTableContainer.css({
-                    "width": options.viewport.width,
-                    "height": options.viewport.height
-                });
-                dsgvoTableContainer.append(dsgvoTable);
-                this.rootElement.append(dsgvoTableContainer);
-            
+            var dsgvoTableContainer: JQuery = $("<div>", { id: "dsgvoTableContainer" });
+            dsgvoTableContainer.css({
+                "width": options.viewport.width,
+                "height": options.viewport.height
+            });
+            dsgvoTableContainer.append(dsgvoTable);
+            this.rootElement.append(dsgvoTableContainer);
+
         }
     }
 
@@ -178,7 +183,7 @@ export class Visual implements IVisual {
         return this.formattingSettingsService.buildFormattingModel(this.formattingSettings);
     }
 
-    private addRow(dsgvoTable, firstColumn: any, secondColumn: any, thirdColumn: any, columns: any, bold: boolean = false, color: any ="#000000"): void {
+    private addRow(dsgvoTable, firstColumn: any, secondColumn: any, thirdColumn: any, columns: any, bold: boolean = false, color: any = "#000000"): void {
         var tableRow: JQuery = $("<tr>");
 
         var tableCell: JQuery = $("<td>").text(firstColumn);
@@ -205,7 +210,7 @@ export class Visual implements IVisual {
 
         if (bold != false) {
             tableRow.css({ "font-weight": "bold" });
-        }  
+        }
         tableRow.css({ "color": color });
         dsgvoTable.append(tableRow);
     }

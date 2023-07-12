@@ -48,13 +48,37 @@ class TotalsCardSettings extends FormattingSettingsCard {
         value: false
     })
 
+    boldTotal= new formattingSettings.ToggleSwitch({
+        name: "boldTotal",
+        displayName: "Bold Grand Totals",
+        value: true
+    })
+
+    colorTotal = new formattingSettings.ColorPicker({
+        name: "colorTotal",
+        displayName: "Default color Grand Totals",
+        value: { value: "" }
+    });
+
     showSubTotal= new formattingSettings.ToggleSwitch({
         name: "showSubtotal",
         displayName: "Show Sub Totals",
         value: false
     })
 
+    boldSubtotal= new formattingSettings.ToggleSwitch({
+        name: "boldSubtotal",
+        displayName: "Bold Sub Totals",
+        value: true
+    })
+
+    colorSubtotal = new formattingSettings.ColorPicker({
+        name: "colorSubtotal",
+        displayName: "Default color Grand Totals",
+        value: { value: "" }
+    });
+
     name: string = "totals";
     displayName: string = "Totals and Sub totals";
-    slices: Array<FormattingSettingsSlice> = [this.showSubTotal, this.showTotal];
+    slices: Array<FormattingSettingsSlice> = [this.showSubTotal, this.boldSubtotal, this.colorSubtotal, this.showTotal, this.boldTotal, this.colorTotal];
 }

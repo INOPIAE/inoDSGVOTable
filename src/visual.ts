@@ -84,7 +84,13 @@ export class Visual implements IVisual {
             var blnShowMainsubject = this.formattingSettings.DSGVOCard.showMainSubject.value;
             var blnShowSubtotal = this.formattingSettings.TotalCard.showSubTotal.value;
             var blnShowTotal = this.formattingSettings.TotalCard.showTotal.value;
+            var blnBoldSubtotal = this.formattingSettings.TotalCard.boldSubtotal.value;
+            var blnBoldTotal = this.formattingSettings.TotalCard.boldTotal.value;
             var blnFirstRow = false;
+
+            var cSubtotal = this.formattingSettings.TotalCard.colorSubtotal.value.value
+            var cTotal = this.formattingSettings.TotalCard.colorTotal.value.value
+    
 
             for (var rowIndex: number = 0; rowIndex < rows.length; rowIndex++) {
 
@@ -103,15 +109,13 @@ export class Visual implements IVisual {
                     // handle sub total
                     if (blnShowSubtotal != false) {
                         topic = "Subtotal of " + mainsubject;
-                        this.addRow(dsgvoTable, topic, "", intSubtotal, columns, true);
+                        this.addRow(dsgvoTable, topic, "", intSubtotal, columns, blnBoldSubtotal, cSubtotal);
                         intSubtotal = 0;
                     }
 
                     mainsubject = rows[rowIndex][0].valueOf();
                     blnFirstRow = true;
                 }
-
-                console.log('Row', rowIndex + " m " + blnShowMainsubject  + " e " + blnFirstRow);
 
                 var firstColumn: PrimitiveValue = rows[rowIndex][0].valueOf();
                 var secondColumn: PrimitiveValue = rows[rowIndex][1].valueOf();
@@ -120,7 +124,7 @@ export class Visual implements IVisual {
                     firstColumn = "";
                 }
                 if (intOtherMargin < Number(rows[rowIndex][2].valueOf())) {
-                    this.addRow(dsgvoTable, firstColumn, secondColumn, thirdColumn, columns, true);
+                    this.addRow(dsgvoTable, firstColumn, secondColumn, thirdColumn, columns);
                     blnFirstRow = false;
                 } else{
                     intOther += Number(rows[rowIndex][2].valueOf());
@@ -140,12 +144,12 @@ export class Visual implements IVisual {
             // handle sub total
             if (blnShowSubtotal != false) {
                 topic = "Subtotal of " + mainsubject;
-                this.addRow(dsgvoTable, topic, "", intSubtotal, columns, true);
+                this.addRow(dsgvoTable, topic, "", intSubtotal, columns, blnBoldSubtotal, cSubtotal);
                 intSubtotal = 0;
             }
             if (blnShowTotal != false) {
                 topic = "Grand total";
-                this.addRow(dsgvoTable, topic, "", intTotal, columns, true);
+                this.addRow(dsgvoTable, topic, "", intTotal, columns, blnBoldTotal, cTotal);
                 intSubtotal = 0;
             }
 
@@ -174,7 +178,7 @@ export class Visual implements IVisual {
         return this.formattingSettingsService.buildFormattingModel(this.formattingSettings);
     }
 
-    private addRow(dsgvoTable, firstColumn: any, secondColumn: any, thirdColumn: any, columns: any, bold: boolean = false): void {
+    private addRow(dsgvoTable, firstColumn: any, secondColumn: any, thirdColumn: any, columns: any, bold: boolean = false, color: any ="#000000"): void {
         var tableRow: JQuery = $("<tr>");
 
         var tableCell: JQuery = $("<td>").text(firstColumn);
@@ -196,12 +200,13 @@ export class Visual implements IVisual {
         });
 
         tableCell = $("<td>").text(valueFormatter.format(thirdColumn));
-        // if (this.getValue<boolean>(columns[2].objects, "columnFormatting", "fontBold", false) || bold === true) {
-        //     tableCellOther.css({ "font-weight": "bold" });
-        // }
         tableCell.css({ "text-align": "right" });
-
         tableRow.append(tableCell);
+
+        if (bold != false) {
+            tableRow.css({ "font-weight": "bold" });
+        }  
+        tableRow.css({ "color": color });
         dsgvoTable.append(tableRow);
     }
 }

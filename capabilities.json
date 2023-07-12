@@ -33,9 +33,37 @@
                         "bool": true
                     }
                 },
+                "boldSubtotal": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "colorSubtotal": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },                
                 "showTotal": {
                     "type": {
                         "bool": true
+                    }
+                },
+                "boldTotal": {
+                    "type": {
+                        "bool": true
+                    }
+                },
+                "colorTotal": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
                     }
                 }
             }

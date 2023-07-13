@@ -1,5 +1,14 @@
 {
     "Value_Name" : "Werte",
+    "F_DSGVOSettings" : "DSGVO Einstellungen",
     "F_Othername" : "Text für Sonstiges",
-    "F_OtherLimit" : "Kleiner als"
+    "F_OtherLimit" : "Kleiner als",
+    "F_ShowMainSubject" : "Haupttext anzeigen",
+    "F_Totals" : "Gesamt- und Zwischensummen",
+    "F_ShowGrandTotal" : "Zeige Gesamtsumme",
+    "F_BoldGrandTotal" : "Gesamtsumme fett",
+    "F_ColorGrandTotal" : "Schriftfarbe Gesamtsumme",
+    "F_ShowSubTotal" : "Zeige Zwischesummen",
+    "F_BoldSubTotal" : "Zwischensummen fett",
+    "F_ColorSubTotal" : "Schriftfarbe Zwischensummen"
 }

@@ -29,26 +29,22 @@ import { VisualFormattingSettingsModel } from "./settings";
 import * as $ from "jquery";
 
 export class Visual implements IVisual {
-    private target: HTMLElement;
-    private updateCount: number;
-    private textNode: Text;
     private formattingSettings: VisualFormattingSettingsModel;
     private formattingSettingsService: FormattingSettingsService;
     private rootElement: JQuery;
     private dataView: DataView;
     private hostService: IVisualHost;
-    private locale: string;
-   // private localizationManager: ILocalizationManager;
+    private localizationManager: ILocalizationManager;
 
     constructor(options: VisualConstructorOptions) {
         console.log('Visual constructor', options);
-        this.formattingSettingsService = new FormattingSettingsService();
 
         this.hostService = options.host;
         this.rootElement = $(options.element);
-        this.locale = options.host.locale;
-       // this.localizationManager = options.host.createLocalizationManager();
-       const localizationManager = options.host.createLocalizationManager();
+
+        this.localizationManager = options.host.createLocalizationManager();
+        this.formattingSettingsService = new FormattingSettingsService(this.localizationManager);
+
     }
 
     public update(options: VisualUpdateOptions) {

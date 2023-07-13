@@ -21,7 +21,6 @@ class DSGVOCardSettings extends FormattingSettingsCard {
         placeholder:"otherName",
         name: "otherName",
         displayNameKey: "F_Othername",
-        descriptionKey: "F_Othername",
         value: "Other"
     });
 
@@ -33,53 +32,53 @@ class DSGVOCardSettings extends FormattingSettingsCard {
 
     showMainSubject= new formattingSettings.ToggleSwitch({
         name: "showMainSubject",
-        displayName: "Show main subject",
+        displayNameKey: "F_ShowMainSubject",
         value: false
     })
         
     name: string = "dsgvoSettings";
-    displayName: string = "DSGVO settings";
+    displayNameKey: string = "F_DSGVOSettings";
     slices: Array<FormattingSettingsSlice> = [this.otherName, this.otherLimit, this.showMainSubject];
 }
 
 class TotalsCardSettings extends FormattingSettingsCard {
     showTotal= new formattingSettings.ToggleSwitch({
         name: "showTotal",
-        displayName: "Show Grand Totals",
+        displayNameKey: "F_ShowGrandTotal",
         value: false
     })
 
     boldTotal= new formattingSettings.ToggleSwitch({
         name: "boldTotal",
-        displayName: "Bold Grand Totals",
+        displayNameKey: "F_BoldGrandTotal",
         value: true
     })
 
     colorTotal = new formattingSettings.ColorPicker({
         name: "colorTotal",
-        displayName: "Default color Grand Totals",
+        displayNameKey: "F_ColorGrandTotal",
         value: { value: "" }
     });
 
     showSubTotal= new formattingSettings.ToggleSwitch({
         name: "showSubtotal",
-        displayName: "Show Sub Totals",
+        displayNameKey: "F_ShowSubTotal",
         value: false
     })
 
     boldSubtotal= new formattingSettings.ToggleSwitch({
         name: "boldSubtotal",
-        displayName: "Bold Sub Totals",
+        displayNameKey: "F_BoldSubTotal",
         value: true
     })
 
     colorSubtotal = new formattingSettings.ColorPicker({
         name: "colorSubtotal",
-        displayName: "Default color Grand Totals",
+        displayNameKey: "F_ColorSubTotal",
         value: { value: "" }
     });
 
     name: string = "totals";
-    displayName: string = "Totals and Sub totals";
+    displayNameKey: string = "F_Totals";
     slices: Array<FormattingSettingsSlice> = [this.showSubTotal, this.boldSubtotal, this.colorSubtotal, this.showTotal, this.boldTotal, this.colorTotal];
 }

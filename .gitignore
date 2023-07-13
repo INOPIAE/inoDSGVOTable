@@ -4,3 +4,5 @@
 dist
 typings
 ÿ
+/webpack.statistics.dev.html
+/webpack.statistics.prod.html

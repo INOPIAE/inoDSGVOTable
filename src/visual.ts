@@ -90,6 +90,8 @@ export class Visual implements IVisual {
 
             var cSubtotal = this.formattingSettings.TotalCard.colorSubtotal.value.value
             var cTotal = this.formattingSettings.TotalCard.colorTotal.value.value
+
+            console.log("T " + cTotal + " ST " + cSubtotal )
             for (var rowIndex: number = 0; rowIndex < rows.length; rowIndex++) {
 
                 if (mainsubject === null) {
@@ -187,14 +189,11 @@ export class Visual implements IVisual {
         var tableRow: JQuery = $("<tr>");
 
         var tableCell: JQuery = $("<td>").text(firstColumn);
-        // if (this.getValue<boolean>(columns[0].objects, "columnFormatting", "fontBold", false) || bold === true) {
-        //     tableCellOther.css({ "font-weight": "bold" });
-        // }
+        tableCell.css({ "color": color });
         tableRow.append(tableCell);
         tableCell = $("<td>").text(secondColumn);
-        // if (this.getValue<boolean>(columns[1].objects, "columnFormatting", "fontBold", false) || bold === true) {
-        //     tableCellOther.css({ "font-weight": "bold" });
-        // }
+        tableCell.css({ "color": color });
+
         tableRow.append(tableCell);
 
         var valueFormat: string = columns[2].format;
@@ -206,12 +205,13 @@ export class Visual implements IVisual {
 
         tableCell = $("<td>").text(valueFormatter.format(thirdColumn));
         tableCell.css({ "text-align": "right" });
+        tableCell.css({ "color": color });
         tableRow.append(tableCell);
 
         if (bold != false) {
             tableRow.css({ "font-weight": "bold" });
         }
-        tableRow.css({ "color": color });
+        
         dsgvoTable.append(tableRow);
     }
 }

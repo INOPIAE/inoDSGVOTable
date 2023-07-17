@@ -39,7 +39,7 @@ class DSGVOCardSettings extends FormattingSettingsCard {
     fontSize = new formattingSettings.NumUpDown({
         name: "fontSize",
         displayNameKey: "F_FontSize",
-        value: 8
+        value: 10
     });
 
     colorFontColorheader = new formattingSettings.ColorPicker({

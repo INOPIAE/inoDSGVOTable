@@ -36,9 +36,15 @@ class DSGVOCardSettings extends FormattingSettingsCard {
         value: false
     })
         
+    fontSize = new formattingSettings.NumUpDown({
+        name: "fontSize",
+        displayNameKey: "F_FontSize",
+        value: 8
+    });
+
     name: string = "dsgvoSettings";
     displayNameKey: string = "F_DSGVOSettings";
-    slices: Array<FormattingSettingsSlice> = [this.otherName, this.otherLimit, this.showMainSubject];
+    slices: Array<FormattingSettingsSlice> = [this.otherName, this.otherLimit, this.showMainSubject, this.fontSize];
 }
 
 class TotalsCardSettings extends FormattingSettingsCard {

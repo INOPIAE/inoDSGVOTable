@@ -10,5 +10,6 @@
     "F_ColorGrandTotal" : "Schriftfarbe Gesamtsumme",
     "F_ShowSubTotal" : "Zeige Zwischesummen",
     "F_BoldSubTotal" : "Zwischensummen fett",
-    "F_ColorSubTotal" : "Schriftfarbe Zwischensummen"
+    "F_ColorSubTotal" : "Schriftfarbe Zwischensummen",
+    "F_FontSize" : "Schriftgröße"
 }

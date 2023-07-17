@@ -1,4 +1,4 @@
-{F_ShowMainSubject
+{
     "Value_Name" : "Values",
     "F_DSGVOSettings" : "DSGVO settings",
     "F_Othername" : "Text for other",
@@ -10,5 +10,6 @@
     "F_ColorGrandTotal" : "Grand Total font color",
     "F_ShowSubTotal" : "Show Subtotals",
     "F_BoldSubTotal" : "Bold Subtotals",
-    "F_ColorSubTotal" : "Subtotals font color"
+    "F_ColorSubTotal" : "Subtotals font color",
+    "F_FontSize" : "Font size"
 }

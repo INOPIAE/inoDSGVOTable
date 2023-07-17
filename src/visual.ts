@@ -61,15 +61,18 @@ export class Visual implements IVisual {
             var table: DataViewTable = dataView.table;
             var columns: DataViewMetadataColumn[] = table.columns;
             var rows: DataViewTableRow[] = table.rows;
-
+            var cFontsize = this.formattingSettings.DSGVOCard.fontSize.value
+console.log("FS " +cFontsize) 
             var dsgvoTable: JQuery = $("<table>", { id: "dsgvoTable" });
             var headerRow: JQuery = $("<tr>");
             for (var headerIndex: number = 0; headerIndex < columns.length; headerIndex++) {
                 var headerCell: JQuery = $("<th>").text(columns[headerIndex].displayName);
                 if (headerIndex < 2) {
                     headerCell.css({ "text-align": "left" });
+                    headerCell.css({ "font-size": cFontsize});
                 } else {
                     headerCell.css({ "text-align": "right" });
+                    headerCell.css({ "font-size": cFontsize});
                 }
                 headerRow.append(headerCell);
             }
@@ -91,8 +94,8 @@ export class Visual implements IVisual {
 
             var cSubtotal = this.formattingSettings.TotalCard.colorSubtotal.value.value
             var cTotal = this.formattingSettings.TotalCard.colorTotal.value.value
+           
 
-            console.log("T " + cTotal + " ST " + cSubtotal )
             for (var rowIndex: number = 0; rowIndex < rows.length; rowIndex++) {
 
                 if (mainsubject === null) {
@@ -106,14 +109,14 @@ export class Visual implements IVisual {
                         topic = "";
                     }
                     if (intOther > 0) {
-                        this.addRow(dsgvoTable, topic, strOther, intOther, columns);
+                        this.addRow(dsgvoTable, topic, strOther, intOther, columns, false,"#000000", cFontsize);
                     }
                     
 
                     // handle sub total
                     if (blnShowSubtotal != false) {
                         topic = "Subtotal of " + mainsubject;
-                        this.addRow(dsgvoTable, topic, "", intSubtotal, columns, blnBoldSubtotal, cSubtotal);
+                        this.addRow(dsgvoTable, topic, "", intSubtotal, columns, blnBoldSubtotal, cSubtotal, cFontsize);
                         intSubtotal = 0;
                     }
                     
@@ -129,7 +132,7 @@ export class Visual implements IVisual {
                     firstColumn = "";
                 }
                 if (intOtherMargin < Number(rows[rowIndex][2].valueOf()) ) {
-                    this.addRow(dsgvoTable, firstColumn, secondColumn, thirdColumn, columns);
+                    this.addRow(dsgvoTable, firstColumn, secondColumn, thirdColumn, columns,false, "#000000",cFontsize);
                     blnFirstRow = false;
                 } else {
                     intOther += Number(rows[rowIndex][2].valueOf());
@@ -145,19 +148,19 @@ export class Visual implements IVisual {
                 if (blnShowMainsubject != true) {
                     topic = "";
                 }
-                this.addRow(dsgvoTable, topic, strOther, intOther, columns);    
+                this.addRow(dsgvoTable, topic, strOther, intOther, columns, false, "#000000", cFontsize);    
             }
      
 
             // handle sub total
             if (blnShowSubtotal != false) {
                 topic = "Subtotal of " + mainsubject;
-                this.addRow(dsgvoTable, topic, "", intSubtotal, columns, blnBoldSubtotal, cSubtotal);
+                this.addRow(dsgvoTable, topic, "", intSubtotal, columns, blnBoldSubtotal, cSubtotal, cFontsize);
                 intSubtotal = 0;
             }
             if (blnShowTotal != false) {
                 topic = "Grand total";
-                this.addRow(dsgvoTable, topic, "", intTotal, columns, blnBoldTotal, cTotal);
+                this.addRow(dsgvoTable, topic, "", intTotal, columns, blnBoldTotal, cTotal,cFontsize);
                 intSubtotal = 0;
             }
 
@@ -186,14 +189,16 @@ export class Visual implements IVisual {
         return this.formattingSettingsService.buildFormattingModel(this.formattingSettings);
     }
 
-    private addRow(dsgvoTable, firstColumn: any, secondColumn: any, thirdColumn: any, columns: any, bold: boolean = false, color: any = "#000000"): void {
+    private addRow(dsgvoTable, firstColumn: any, secondColumn: any, thirdColumn: any, columns: any, bold: boolean = false, color: any = "#000000", fontsize: any = 8): void {
         var tableRow: JQuery = $("<tr>");
 
         var tableCell: JQuery = $("<td>").text(firstColumn);
         tableCell.css({ "color": color });
+        tableRow.css({ "font-size": fontsize });
         tableRow.append(tableCell);
         tableCell = $("<td>").text(secondColumn);
         tableCell.css({ "color": color });
+        tableRow.css({ "font-size": fontsize });
 
         tableRow.append(tableCell);
 
@@ -207,6 +212,7 @@ export class Visual implements IVisual {
         tableCell = $("<td>").text(valueFormatter.format(thirdColumn));
         tableCell.css({ "text-align": "right" });
         tableCell.css({ "color": color });
+        tableRow.css({ "font-size": fontsize });
         tableRow.append(tableCell);
 
         if (bold != false) {

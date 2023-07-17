@@ -42,9 +42,21 @@ class DSGVOCardSettings extends FormattingSettingsCard {
         value: 8
     });
 
+    colorFontColorheader = new formattingSettings.ColorPicker({
+        name: "fontColorHeader",
+        displayNameKey: "F_FontColorHeader",
+        value: { value: "" }
+    });
+
+    colorBackColorHeader = new formattingSettings.ColorPicker({
+        name: "backColorHeader",
+        displayNameKey: "F_BackColorHeader",
+        value: { value: "" }
+    });
+
     name: string = "dsgvoSettings";
     displayNameKey: string = "F_DSGVOSettings";
-    slices: Array<FormattingSettingsSlice> = [this.otherName, this.otherLimit, this.showMainSubject, this.fontSize];
+    slices: Array<FormattingSettingsSlice> = [this.otherName, this.otherLimit, this.showMainSubject, this.fontSize, this.colorBackColorHeader, this.colorFontColorheader];
 }
 
 class TotalsCardSettings extends FormattingSettingsCard {

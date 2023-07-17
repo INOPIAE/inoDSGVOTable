@@ -11,5 +11,7 @@
     "F_ShowSubTotal" : "Show Subtotals",
     "F_BoldSubTotal" : "Bold Subtotals",
     "F_ColorSubTotal" : "Subtotals font color",
-    "F_FontSize" : "Font size"
+    "F_FontSize" : "Font size",
+    "F_BackColorHeader" : "Header back color",
+    "F_FontColorHeader" : "Header font color"
 }

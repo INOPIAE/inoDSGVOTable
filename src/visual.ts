@@ -62,7 +62,9 @@ export class Visual implements IVisual {
             var columns: DataViewMetadataColumn[] = table.columns;
             var rows: DataViewTableRow[] = table.rows;
             var cFontsize = this.formattingSettings.DSGVOCard.fontSize.value
-console.log("FS " +cFontsize) 
+            var cBackColorHeader=this.formattingSettings.DSGVOCard.colorBackColorHeader.value.value
+            var cFontColorHeader=this.formattingSettings.DSGVOCard.colorFontColorheader.value.value
+
             var dsgvoTable: JQuery = $("<table>", { id: "dsgvoTable" });
             var headerRow: JQuery = $("<tr>");
             for (var headerIndex: number = 0; headerIndex < columns.length; headerIndex++) {
@@ -74,6 +76,8 @@ console.log("FS " +cFontsize)
                     headerCell.css({ "text-align": "right" });
                     headerCell.css({ "font-size": cFontsize});
                 }
+                headerCell.css({ "color": cFontColorHeader });
+                headerCell.css({ "background-color": cBackColorHeader });
                 headerRow.append(headerCell);
             }
             dsgvoTable.append(headerRow);

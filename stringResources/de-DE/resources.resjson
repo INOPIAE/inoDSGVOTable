@@ -11,5 +11,7 @@
     "F_ShowSubTotal" : "Zeige Zwischesummen",
     "F_BoldSubTotal" : "Zwischensummen fett",
     "F_ColorSubTotal" : "Schriftfarbe Zwischensummen",
-    "F_FontSize" : "Schriftgröße"
+    "F_FontSize" : "Schriftgröße",
+    "F_BackColorHeader" : "Hintergrundfarbe Überschrift",
+    "F_FontColorHeader" : "Schriftfarbe Überschrift"
 }

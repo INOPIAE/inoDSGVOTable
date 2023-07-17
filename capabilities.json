@@ -29,6 +29,24 @@
                     "type": {
                         "numeric": true
                     }
+                },
+                "fontColorHeader": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
+                },
+                "backColorHeader": {
+                    "type": {
+                        "fill": {
+                            "solid": {
+                                "color": true
+                            }
+                        }
+                    }
                 }
             }
         },

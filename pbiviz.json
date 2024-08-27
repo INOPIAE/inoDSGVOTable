@@ -1,10 +1,10 @@
 {
     "visual": {
         "name": "inoDSGVOTable",
-        "displayName": "inoDSGVOTable 0.0.1",
+        "displayName": "inoDSGVOTable",
         "guid": "inoDSGVOTable3AE8089A9E43435E95C001A9A908A8AC",
         "visualClassName": "Visual",
-        "version": "0.0.1",
+        "version": "0.0.1.0",
         "description": "Visual for a table to sumerise values according to GDPR",
         "supportUrl": "TBD",
         "gitHubUrl": "https://github.com/INOPIAE/inoDSGVOTable"
@@ -17,9 +17,10 @@
     "assets": {
         "icon": "assets/icon.png"
     },
-    "externalJS": null,
+    "externalJS": [],
     "style": "style/visual.less",
     "capabilities": "capabilities.json",
     "dependencies": null,
-    "stringResources": []
+    "stringResources": [],
+    "version": "0.0.1.0"
 }

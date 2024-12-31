@@ -4,9 +4,9 @@
         "displayName": "inoDSGVOTable",
         "guid": "inoDSGVOTable3AE8089A9E43435E95C001A9A908A8AC",
         "visualClassName": "Visual",
-        "version": "0.0.1.0",
-        "description": "Visual for a table to sumerise values according to GDPR",
-        "supportUrl": "TBD",
+        "version": "0.0.1.1",
+        "description": "Visual for a table to summarise values according to GDPR",
+        "supportUrl": "https://github.com/INOPIAE/inoDSGVOTable",
         "gitHubUrl": "https://github.com/INOPIAE/inoDSGVOTable"
     },
     "apiVersion": "5.3.0",
@@ -22,5 +22,5 @@
     "capabilities": "capabilities.json",
     "dependencies": null,
     "stringResources": [],
-    "version": "0.0.1.0"
+    "version": "0.0.1.1"
 }

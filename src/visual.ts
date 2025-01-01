@@ -27,6 +27,7 @@ import ILocalizationManager = powerbi.extensibility.ILocalizationManager;
 import { VisualFormattingSettingsModel } from "./settings";
 
 import * as $ from "jquery";
+import * as d3 from "d3";
 
 export class Visual implements IVisual {
     private formattingSettings: VisualFormattingSettingsModel;
@@ -36,6 +37,11 @@ export class Visual implements IVisual {
     private hostService: IVisualHost;
     private localizationManager: ILocalizationManager;
 
+    private landingElement: HTMLElement;
+    private isLandingPageOn: boolean;
+    private isLandingPageRemoved: boolean;
+    private LandingPage: d3.Selection<any, any, any, any>;
+
     constructor(options: VisualConstructorOptions) {
         console.log('Visual constructor', options);
 
@@ -44,6 +50,7 @@ export class Visual implements IVisual {
 
         this.localizationManager = options.host.createLocalizationManager();
         this.formattingSettingsService = new FormattingSettingsService(this.localizationManager);
+        this.landingElement = options.element;
 
     }
 
@@ -51,6 +58,14 @@ export class Visual implements IVisual {
         this.formattingSettings = this.formattingSettingsService.populateFormattingSettingsModel(VisualFormattingSettingsModel, options.dataViews);
 
         console.log('Visual update', options);
+
+        this.rootElement.empty();
+
+        this.HandleLandingPage(options.dataViews[0]);
+
+        if (this.isLandingPageOn) {
+            return;
+        }
 
         this.rootElement.empty();
 
@@ -62,8 +77,8 @@ export class Visual implements IVisual {
             var columns: DataViewMetadataColumn[] = table.columns;
             var rows: DataViewTableRow[] = table.rows;
             var cFontsize = this.formattingSettings.DSGVOCard.fontSize.value
-            var cBackColorHeader=this.formattingSettings.DSGVOCard.colorBackColorHeader.value.value
-            var cFontColorHeader=this.formattingSettings.DSGVOCard.colorFontColorheader.value.value
+            var cBackColorHeader = this.formattingSettings.DSGVOCard.colorBackColorHeader.value.value
+            var cFontColorHeader = this.formattingSettings.DSGVOCard.colorFontColorheader.value.value
 
             var dsgvoTable: JQuery = $("<table>", { id: "dsgvoTable" });
             var headerRow: JQuery = $("<tr>");
@@ -71,10 +86,10 @@ export class Visual implements IVisual {
                 var headerCell: JQuery = $("<th>").text(columns[headerIndex].displayName);
                 if (headerIndex < 2) {
                     headerCell.css({ "text-align": "left" });
-                    headerCell.css({ "font-size": cFontsize});
+                    headerCell.css({ "font-size": cFontsize });
                 } else {
                     headerCell.css({ "text-align": "right" });
-                    headerCell.css({ "font-size": cFontsize});
+                    headerCell.css({ "font-size": cFontsize });
                 }
                 headerCell.css({ "color": cFontColorHeader });
                 headerCell.css({ "background-color": cBackColorHeader });
@@ -98,7 +113,7 @@ export class Visual implements IVisual {
 
             var cSubtotal = this.formattingSettings.TotalCard.colorSubtotal.value.value
             var cTotal = this.formattingSettings.TotalCard.colorTotal.value.value
-           
+
 
             for (var rowIndex: number = 0; rowIndex < rows.length; rowIndex++) {
 
@@ -113,9 +128,9 @@ export class Visual implements IVisual {
                         topic = "";
                     }
                     if (intOther > 0) {
-                        this.addRow(dsgvoTable, topic, strOther, intOther, columns, false,"#000000", cFontsize);
+                        this.addRow(dsgvoTable, topic, strOther, intOther, columns, false, "#000000", cFontsize);
                     }
-                    
+
 
                     // handle sub total
                     if (blnShowSubtotal != false) {
@@ -123,7 +138,7 @@ export class Visual implements IVisual {
                         this.addRow(dsgvoTable, topic, "", intSubtotal, columns, blnBoldSubtotal, cSubtotal, cFontsize);
                         intSubtotal = 0;
                     }
-                    
+
                     mainsubject = rows[rowIndex][0].valueOf();
                     blnFirstRow = true;
                     intOther = 0;
@@ -135,26 +150,26 @@ export class Visual implements IVisual {
                 if (blnShowMainsubject != true && blnFirstRow != true) {
                     firstColumn = "";
                 }
-                if (intOtherMargin < Number(rows[rowIndex][2].valueOf()) ) {
-                    this.addRow(dsgvoTable, firstColumn, secondColumn, thirdColumn, columns,false, "#000000",cFontsize);
+                if (intOtherMargin < Number(rows[rowIndex][2].valueOf())) {
+                    this.addRow(dsgvoTable, firstColumn, secondColumn, thirdColumn, columns, false, "#000000", cFontsize);
                     blnFirstRow = false;
                 } else {
                     intOther += Number(rows[rowIndex][2].valueOf());
                 }
-                
+
                 intSubtotal += Number(rows[rowIndex][2].valueOf())
                 intTotal += Number(rows[rowIndex][2].valueOf())
             }
 
             // handle final rows
-            if (intOther > 0){
+            if (intOther > 0) {
                 var topic = mainsubject;
                 if (blnShowMainsubject != true) {
                     topic = "";
                 }
-                this.addRow(dsgvoTable, topic, strOther, intOther, columns, false, "#000000", cFontsize);    
+                this.addRow(dsgvoTable, topic, strOther, intOther, columns, false, "#000000", cFontsize);
             }
-     
+
 
             // handle sub total
             if (blnShowSubtotal != false) {
@@ -164,7 +179,7 @@ export class Visual implements IVisual {
             }
             if (blnShowTotal != false) {
                 topic = "Grand total";
-                this.addRow(dsgvoTable, topic, "", intTotal, columns, blnBoldTotal, cTotal,cFontsize);
+                this.addRow(dsgvoTable, topic, "", intTotal, columns, blnBoldTotal, cTotal, cFontsize);
                 intSubtotal = 0;
             }
 
@@ -222,7 +237,85 @@ export class Visual implements IVisual {
         if (bold != false) {
             tableRow.css({ "font-weight": "bold" });
         }
-        
+
         dsgvoTable.append(tableRow);
+    }
+
+    private HandleLandingPage(dataView: DataView) {
+        var noData: string = "";
+
+        if (typeof dataView === "undefined" ||
+            typeof dataView.table === "undefined") {
+
+            if (typeof dataView === "undefined" ||
+                typeof dataView.table === "undefined") {
+                noData = this.localizationManager.getDisplayName("LP_NoData");
+            }
+
+            this.showLandingPage(noData);
+        } else if (dataView.table.columns.length != 3) {
+            if (dataView.table.columns.length < 3) {
+                noData = this.localizationManager.getDisplayName("LP_LessColumns");
+            } else {
+                noData = this.localizationManager.getDisplayName("LP_MoreColumns");
+            }
+            this.showLandingPage(noData);
+        } else {
+            if (dataView.table.rows.length > 0) {
+                if (isNaN(+dataView.table.rows[0][2])) {
+                    noData = this.localizationManager.getDisplayName("LP_NotNumber");
+                    this.showLandingPage(noData);
+                } else {
+                    this.removeLandingPage();
+                }
+            } else {
+                this.removeLandingPage();
+            }
+        }
+    }
+
+    private removeLandingPage() {
+
+        if (this.isLandingPageOn && !this.isLandingPageRemoved) {
+            this.isLandingPageOn = false;
+            this.isLandingPageRemoved = true;
+            this.LandingPage.remove();
+        }
+    }
+
+    private showLandingPage(noData: string) {
+        if (!this.isLandingPageOn) {
+            this.isLandingPageOn = true;
+            const visualLandingPage: Element = this.createLandingPage(noData); //create a landing page
+            this.landingElement.appendChild(visualLandingPage);
+            this.LandingPage = d3.select(visualLandingPage);
+        }
+    }
+
+    private createLandingPage(noData: string): Element {
+        const div = document.createElement("div");
+
+        const header = document.createElement("h1");
+        header.textContent = this.localizationManager.getDisplayName("LP_Header");
+        header.setAttribute("class", "LandingPage");
+
+        const pNoData = document.createElement("p");
+        pNoData.textContent = noData;
+
+        const pLink = document.createElement("a");
+        pLink.setAttribute("class", "LandingPageHelpLink");
+        pLink.textContent = this.localizationManager.getDisplayName("LP_LinkText");
+
+        pLink.addEventListener("click", () => {
+            this.hostService.launchUrl("https://github.com/INOPIAE/inoDSGVOTable/");
+        });
+
+        div.appendChild(header);
+
+        div.appendChild(pNoData);
+
+        div.appendChild(pLink);
+
+        return div;
     }
 }

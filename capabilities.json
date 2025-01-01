@@ -70,7 +70,7 @@
                             }
                         }
                     }
-                },                
+                },
                 "showTotal": {
                     "type": {
                         "bool": true
@@ -103,7 +103,6 @@
                 }
             }
         }
-
     },
     "dataViewMappings": [
         {
@@ -124,5 +123,7 @@
             }
         }
     ],
-    "privileges": []
+    "privileges": [],
+    "supportsLandingPage": true,
+    "supportsEmptyDataView": true
 }

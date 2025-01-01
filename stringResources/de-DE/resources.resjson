@@ -13,5 +13,11 @@
     "F_ColorSubTotal" : "Schriftfarbe Zwischensummen",
     "F_FontSize" : "Schriftgröße",
     "F_BackColorHeader" : "Hintergrundfarbe Überschrift",
-    "F_FontColorHeader" : "Schriftfarbe Überschrift"
+    "F_FontColorHeader" : "Schriftfarbe Überschrift",
+    "LP_Header" : "Fehlende oder fehlerhafte Daten",
+    "LP_LinkText" : "Lerne mehr über inoDSGVOTable",
+    "LP_NoData" : "Keine Daten angegeben",
+    "LP_LessColumns" : "Zu wenig Datenspalten (<3)",
+    "LP_MoreColumns" : "Zu viele Datenspalten (>3)",
+    "LP_NotNumber" : "Die letzte Datenspalte enhält keine nummerischen Werte."
 }

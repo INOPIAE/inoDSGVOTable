@@ -1,8 +1,8 @@
 /node_modules
 .DS_Store
 .tmp
-dist
+
 typings
-ÿ
+ï¿½
 /webpack.statistics.dev.html
 /webpack.statistics.prod.html

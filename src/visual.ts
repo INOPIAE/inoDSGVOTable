@@ -23,6 +23,7 @@ import { valueFormatter as vf, textMeasurementService as tms } from "powerbi-vis
 import IValueFormatter = vf.IValueFormatter;
 
 import ILocalizationManager = powerbi.extensibility.ILocalizationManager;
+import IVisualEventService = powerbi.extensibility.IVisualEventService;
 
 import { VisualFormattingSettingsModel } from "./settings";
 
@@ -36,6 +37,7 @@ export class Visual implements IVisual {
     private dataView: DataView;
     private hostService: IVisualHost;
     private localizationManager: ILocalizationManager;
+    private events: IVisualEventService;
 
     private landingElement: HTMLElement;
     private isLandingPageOn: boolean;
@@ -51,6 +53,7 @@ export class Visual implements IVisual {
         this.localizationManager = options.host.createLocalizationManager();
         this.formattingSettingsService = new FormattingSettingsService(this.localizationManager);
         this.landingElement = options.element;
+        this.events = options.host.eventService;
 
     }
 
@@ -58,12 +61,13 @@ export class Visual implements IVisual {
         this.formattingSettings = this.formattingSettingsService.populateFormattingSettingsModel(VisualFormattingSettingsModel, options.dataViews);
 
         console.log('Visual update', options);
-
+        this.events.renderingStarted(options);
         this.rootElement.empty();
 
         this.HandleLandingPage(options.dataViews[0]);
 
         if (this.isLandingPageOn) {
+            this.events.renderingFinished(options);
             return;
         }
 
@@ -197,6 +201,7 @@ export class Visual implements IVisual {
             dsgvoTableContainer.append(dsgvoTable);
             this.rootElement.append(dsgvoTableContainer);
 
+            this.events.renderingFinished(options);
         }
     }
 
